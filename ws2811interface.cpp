@@ -4,3 +4,8 @@ Ws2811Interface::Ws2811Interface()
 {
 
 }
+
+Ws2811Interface::~Ws2811Interface()
+{
+
+}

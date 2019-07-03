@@ -14,42 +14,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SOURCES += \
-    main.cpp \
-    ws2811interface.cpp \
-    watchdial.cpp
-
 win32:SOURCES += \
+    UnitTests/Helper/csvreader.cpp \
+    UnitTests/ws2811interfaceut.cpp \
     ws2811sim.cpp \
-
-unix:SOURCES += \
-    WS2811/dma.c \
-    WS2811/mailbox.c \
-    WS2811/pcm.c \
-    WS2811/pwm.c \
-    WS2811/rpihw.c \
-    WS2811/ws2811.c \
-    ws2811impl.cpp
+    ws2811interface.cpp \
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /home/pi/app
 !isEmpty(target.path): INSTALLS += target
 
-HEADERS += \
-    ws2811interface.h \
-    watchdial.h
-
 win32:HEADERS += \
+    UnitTests/Helper/csvreader.h \
+    ws2811interface.h \
     ws2811sim.h
 
-unix:HEADERS += \
-    WS2811/clk.h \
-    WS2811/dma.h \
-    WS2811/gpio.h \
-    WS2811/mailbox.h \
-    WS2811/pcm.h \
-    WS2811/pwm.h \
-    WS2811/rpihw.h \
-    WS2811/ws2811.h \
-    ws2811impl.h
+testdata.path = $$OUT_PWD/UnitTests/TestData/
+testdata.files = UnitTests/TestData/*
+INSTALLS += testdata
