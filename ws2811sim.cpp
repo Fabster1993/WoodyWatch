@@ -4,9 +4,10 @@
 
 const QString format = QString("R%1,G%2,B%3");
 
-Ws2811Sim::Ws2811Sim(const quint16 numberOfLeds)
+Ws2811Sim::Ws2811Sim(const quint16 numberOfPixel) :
+    Ws2811Interface(numberOfPixel)
 {
-    for(quint16 iterator = 0; iterator < numberOfLeds; ++iterator)
+    for(quint16 iterator = 0; iterator < numberOfPixel; ++iterator)
     {
         ledstring.append(format.arg(QString::number(0)).arg(QString::number(0)).arg(QString::number(0)));
     }

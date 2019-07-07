@@ -8,7 +8,8 @@ const quint32 frequency = 800000;
 const quint16 dmaNumber = 10;
 const quint16 brightness = 128;
 
-Ws2811Impl::Ws2811Impl(const quint16 numberOfLeds) :
+Ws2811Impl::Ws2811Impl(const quint16 numberOfPixel) :
+    Ws2811Interface(numberOfPixel) ,
     channel(nullptr),
     ledstring(nullptr)
 {
@@ -16,7 +17,7 @@ Ws2811Impl::Ws2811Impl(const quint16 numberOfLeds) :
     channel->gpionum = pwmGpioPin;
     channel->invert = 0;
     channel->strip_type = WS2811_STRIP_GRB;
-    channel->count = numberOfLeds; // number of leds
+    channel->count = numberOfPixel;
     channel->brightness = brightness;
 
     ledstring = new ws2811_t;
@@ -36,6 +37,7 @@ Ws2811Impl::~Ws2811Impl()
     delete channel;
     channel = nullptr;
 
+    ws2811_fini(ledstring);
     delete ledstring;
     ledstring = nullptr;
 }
@@ -47,5 +49,5 @@ void Ws2811Impl::setPixel(const quint16 pixel, const QColor& color)
 
 void Ws2811Impl::renderPixels()
 {
-       ws2811_render(ledstring);
+    ws2811_render(ledstring);
 }

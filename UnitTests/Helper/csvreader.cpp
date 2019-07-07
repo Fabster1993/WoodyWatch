@@ -1,5 +1,6 @@
 #include "csvreader.h"
 #include <QFile>
+#include <QDebug>
 
 const QString csvFileEnding = "csv";
 
@@ -15,6 +16,11 @@ CsvReader::CsvReader(const QString& filepath)
         {
             fileContent.append(file.readLine().replace("\n",""));
         }
+    }
+    else
+    {
+        qDebug() << QString("File %1 not found").arg(filepath);
+        Q_ASSERT(false);
     }
 }
 

@@ -7,7 +7,7 @@
 class Ws2811Sim : public Ws2811Interface
 {
 public:
-    Ws2811Sim(const quint16 numberOfLeds);
+    Ws2811Sim(const quint16 numberOfPixel);
     ~Ws2811Sim();
     virtual void setPixel(const quint16 pixel, const QColor& color);
     virtual void renderPixels();

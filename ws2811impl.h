@@ -9,7 +9,7 @@ struct ws2811_t;
 class Ws2811Impl : public Ws2811Interface
 {
 public:
-    Ws2811Impl(const quint16 numberOfLeds);
+    Ws2811Impl(const quint16 numberOfPixel);
     ~Ws2811Impl();
     virtual void setPixel(const quint16 pixel, const QColor& color);
     virtual void renderPixels();
