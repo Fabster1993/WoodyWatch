@@ -4,38 +4,38 @@
 #include "UnitTests/Helper/csvreader.h"
 #include <QDir>
 
-void Ws2811InterfaceUT::initTestCase()
+void TestWs2811Interface::initTestCase()
 {
 
 }
 
-void Ws2811InterfaceUT::testRenderFirstPixelToRed()
+void TestWs2811Interface::testRenderSinglePixel_data()
 {
-    QString filepath = QDir::currentPath() + "/UnitTests/TestData/FirstPixelRed.csv";
-    CsvReader csvReader = CsvReader(filepath);
+    QTest::addColumn<QString>("testDataFile");
+    QTest::addColumn<QColor>("color");
+    QTest::addColumn<quint16>("pixel");
+
+    QTest::newRow("first pixel red") << QString(QDir::currentPath() + "/UnitTests/TestData/FirstPixelRed.csv") << QColor(255, 0, 0) << quint16(0);
+    QTest::newRow("second pixel blue") << QString(QDir::currentPath() + "/UnitTests/TestData/SecondPixelBlue.csv") << QColor(0, 0, 255) << quint16(1);
+}
+
+void TestWs2811Interface::testRenderSinglePixel()
+{
+    QFETCH(QString, testDataFile);
+    QFETCH(QColor, color);
+    QFETCH(quint16, pixel);
+
+    CsvReader csvReader = CsvReader(testDataFile);
     Ws2811Interface* ledInterface = new Ws2811Sim(3);
 
-    ledInterface->setPixel(0, QColor(255, 0, 0));
+    ledInterface->setPixel(pixel, color);
     ledInterface->renderPixels();
 
     Ws2811Sim* interfaceSim = dynamic_cast<Ws2811Sim*>(ledInterface);
     QCOMPARE(interfaceSim->getLedString(), csvReader.getContent());
 }
 
-void Ws2811InterfaceUT::testRenderSecondPixelToBlue()
-{
-    QString filepath = QDir::currentPath() + "/UnitTests/TestData/SecondPixelBlue.csv";
-    CsvReader csvReader = CsvReader(filepath);
-    Ws2811Interface* ledInterface = new Ws2811Sim(3);
-
-    ledInterface->setPixel(1, QColor(0, 0, 255));
-    ledInterface->renderPixels();
-
-    Ws2811Sim* interfaceSim = dynamic_cast<Ws2811Sim*>(ledInterface);
-    QCOMPARE(interfaceSim->getLedString(), csvReader.getContent());
-}
-
-void Ws2811InterfaceUT::testLightsOffAfterRenderingEveryPixelToRed()
+void TestWs2811Interface::testLightsOffAfterRenderingEveryPixelToRed()
 {
     QString filepath = QDir::currentPath() + "/UnitTests/TestData/LightsOff.csv";
     CsvReader csvReader = CsvReader(filepath);
@@ -47,13 +47,14 @@ void Ws2811InterfaceUT::testLightsOffAfterRenderingEveryPixelToRed()
         ledInterface->setPixel(pixel, QColor(255, 0, 0));
     }
     ledInterface->renderPixels();
-    ledInterface->lightsOff();
+    ledInterface->resetAllPixel();
+    ledInterface->renderPixels();
 
     Ws2811Sim* interfaceSim = dynamic_cast<Ws2811Sim*>(ledInterface);
     QCOMPARE(interfaceSim->getLedString(), csvReader.getContent());
 }
 
-void Ws2811InterfaceUT::cleanupTestCase()
+void TestWs2811Interface::cleanupTestCase()
 {
 
 }

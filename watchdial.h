@@ -18,9 +18,12 @@ signals:
 public slots:
 
 private:
-    void showHours(const quint16 hours);
-    void showMinutes(const quint16 minutes);
-    quint16 from24hFormatToAMPM(quint16 hours);
+    void setHourPixel(const quint16 hours);
+    void setMinutePixel(const quint16 minutes);
+    static quint16 from24hFormatToAMPM(quint16 hours);
+    quint16 getHourStartPixel(const quint16 hours);
+    quint16 getMinuteStartPixel(const quint16 minutes);
+    void setPixelRange(const quint16 startPixel, const quint16 endPixel, const QColor& color);
 
     quint16 pixelPerMinuteStroke;
     quint16 pixelPerHourStroke;

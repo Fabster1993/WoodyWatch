@@ -3,14 +3,14 @@
 
 #include <QtTest/QtTest>
 
-class Ws2811InterfaceUT: public QObject
+class TestWs2811Interface: public QObject
 {
     Q_OBJECT
 
 private slots:
     void initTestCase();
-    void testRenderFirstPixelToRed();
-    void testRenderSecondPixelToBlue();
+    void testRenderSinglePixel_data();
+    void testRenderSinglePixel();
     void testLightsOffAfterRenderingEveryPixelToRed();
     void cleanupTestCase();
 };

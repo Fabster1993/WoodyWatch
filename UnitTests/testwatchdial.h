@@ -9,6 +9,7 @@ class TestWatchDial: public QObject
 
 private slots:
     void initTestCase();
+    void testShowTimeOfDay_data();
     void testShowTimeOfDay();
     void cleanupTestCase();
 };

@@ -10,7 +10,7 @@ public:
     virtual ~Ws2811Interface();
     virtual void setPixel(const quint16 pixel, const QColor& color) = 0;
     virtual void renderPixels() = 0;
-    virtual void lightsOff();
+    virtual void resetAllPixel();
 private:
     quint16 numberOfPixel;
 };

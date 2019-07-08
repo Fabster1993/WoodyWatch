@@ -12,13 +12,25 @@ void TestWatchDial::initTestCase()
 
 }
 
+void TestWatchDial::testShowTimeOfDay_data()
+{
+    QTest::addColumn<QString>("testDataFile");
+    QTest::addColumn<QTime>("time");
+
+    QTest::newRow("12h59") << QString(QDir::currentPath() + "/UnitTests/TestData/12h59.csv") << QTime(12,59);
+}
+
 void TestWatchDial::testShowTimeOfDay()
 {
-    QString filepath = QDir::currentPath() + "/UnitTests/TestData/FirstPixelRed.csv";
-    CsvReader csvReader = CsvReader(filepath);
+    QFETCH(QString, testDataFile);
+    QFETCH(QTime, time);
+
+    CsvReader csvReader = CsvReader(testDataFile);
     Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity(pixelPerMinuteStroke, pixelPerHourStroke));
     WatchDial watchdial(pixelPerMinuteStroke, pixelPerHourStroke, interface);
-    watchdial.showTimeOfDay(QTime(12,59));
+
+    watchdial.showTimeOfDay(time);
+
     QCOMPARE(interface->getLedString(), csvReader.getContent());
 }
 
