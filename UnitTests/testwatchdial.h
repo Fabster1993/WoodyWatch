@@ -11,6 +11,7 @@ private slots:
     void initTestCase();
     void testShowTimeOfDay_data();
     void testShowTimeOfDay();
+    void testSetTwoTimesOfDayInSuccession();
     void cleanupTestCase();
 };
 

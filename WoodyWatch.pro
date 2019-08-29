@@ -26,6 +26,7 @@ HEADERS += \
     WS2811/rpihw.h \
     WS2811/ws2811.h \
     ws2811impl.h \
+    watch.h
 
 SOURCES += \
     main.cpp \
@@ -38,6 +39,7 @@ SOURCES += \
     WS2811/rpihw.c \
     WS2811/ws2811.c \
     ws2811impl.cpp \
+    watch.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

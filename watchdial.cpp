@@ -17,6 +17,7 @@ WatchDial::WatchDial(const quint16 pixelPerMinuteStroke, const quint16 pixelPerH
 
 void WatchDial::showTimeOfDay(const QTime& timeOfDay)
 {
+    ledInterface->resetAllPixel();
     setHourPixel(static_cast<quint16>(timeOfDay.hour()));
     setMinutePixel(static_cast<quint16>(timeOfDay.minute()));
     ledInterface->renderPixels();
