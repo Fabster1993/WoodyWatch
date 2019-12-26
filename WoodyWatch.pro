@@ -1,4 +1,6 @@
 QT += gui testlib
+QT += webchannel
+QT += websockets
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -26,7 +28,11 @@ HEADERS += \
     WS2811/rpihw.h \
     WS2811/ws2811.h \
     ws2811impl.h \
-    watch.h
+    watch.h \
+    configuration.h \
+    Communication/websocketclientwrapper.h \
+    Communication/websockettransport.h \
+    Communication/webchannel.h
 
 SOURCES += \
     main.cpp \
@@ -39,9 +45,18 @@ SOURCES += \
     WS2811/rpihw.c \
     WS2811/ws2811.c \
     ws2811impl.cpp \
-    watch.cpp
+    watch.cpp \
+    configuration.cpp \
+    Communication/websocketclientwrapper.cpp \
+    Communication/websockettransport.cpp \
+    Communication/webchannel.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /home/pi/app
 !isEmpty(target.path): INSTALLS += target
+
+# install html client
+webclient.path = /var/www/html
+webclient.files = WebClient/*
+INSTALLS += webclient

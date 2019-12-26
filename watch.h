@@ -6,6 +6,7 @@
 class QTimer;
 class QTime;
 class WatchDial;
+class Configuration;
 
 class Watch : public QObject
 {
@@ -13,7 +14,11 @@ class Watch : public QObject
 public:
     explicit Watch(quint16 updateCycle, WatchDial* watchDial);
     ~Watch();
-
+    void initialize();
+    void configureWatchDial(const Configuration& configuration);
+public slots:
+    // temporary
+    void setHourStrokeColor(quint32 hourStrokeColor);
 private slots:
     void showTime();
 private:

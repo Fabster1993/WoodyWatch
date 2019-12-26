@@ -21,12 +21,8 @@ SOURCES += \
     watchdial.cpp \
     UnitTests/testwatchdial.cpp \
     UnitTests/main.cpp \
-    UnitTests/testws2811interface.cpp
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /home/pi/app
-!isEmpty(target.path): INSTALLS += target
+    UnitTests/testws2811interface.cpp \
+    configuration.cpp
 
 HEADERS += \
     UnitTests/Helper/csvreader.h \
@@ -34,7 +30,8 @@ HEADERS += \
     ws2811sim.h \
     watchdial.h \
     UnitTests/testwatchdial.h \
-    UnitTests/testws2811interface.h
+    UnitTests/testws2811interface.h \
+    configuration.h
 
 testdata.path = $$OUT_PWD/UnitTests/TestData/
 testdata.files = UnitTests/TestData/*
