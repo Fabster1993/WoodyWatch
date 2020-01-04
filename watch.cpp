@@ -1,32 +1,44 @@
 #include "watch.h"
 #include <QTime>
 #include <QTimer>
-#include <watchdial.h>
+#include "watchdial.h"
+#include "ws2811impl.h"
 
 #include <QDebug>
 
-Watch::Watch(quint16 updateCycleTime, WatchDial* watchDial)
+Watch::Watch()
     : QObject(nullptr),
       timer(nullptr),
-      watchDial(watchDial)
+      watchDial(nullptr),
+      ledInterface(nullptr)
 {
     timer = new QTimer;
-    connect(timer, SIGNAL(timeout()), this, SLOT(showTime()));
-    timer->start(updateCycleTime);
+    timer->setSingleShot(true);
+    connect(timer, &QTimer::timeout, this, &Watch::showTime);
+
+    ledInterface = new Ws2811Impl(WatchDial::getPixelQuantity());
+    this->watchDial = new WatchDial(ledInterface);
+}
+
+qint32 Watch::calculateNextTimerTimeout()
+{
+    const QTime currentTime = QTime::currentTime();
+    return (60 * 1000) - (currentTime.second() * 1000) - currentTime.msec();
+}
+
+Watch& Watch::getInstance()
+{
+    static Watch instance;
+    return instance;
 }
 
 Watch::~Watch()
 {
-    if(timer != nullptr)
-    {
-        delete timer;
-        timer = nullptr;
-    }
-    if(watchDial != nullptr)
-    {
-        delete watchDial;
-        watchDial = nullptr;
-    }
+    delete timer;
+    timer = nullptr;
+
+    delete watchDial;
+    watchDial = nullptr;
 }
 
 void Watch::initialize()
@@ -36,18 +48,24 @@ void Watch::initialize()
 
 void Watch::setHourStrokeColor(quint32 hourStrokeColor)
 {
-    qDebug() << hourStrokeColor;
-    Configuration configuration(QColor(hourStrokeColor), QColor(255, 0, 0));
-    configureWatchDial(configuration);
+    QColor color(hourStrokeColor);
+    Configuration configuration = watchDial->getConfiguration();
+    configuration.setHourStrokeColor(color);
+    watchDial->setConfiguration(configuration);
     showTime();
 }
 
-void Watch::configureWatchDial(const Configuration& configuration)
+void Watch::setMinuteStrokeColor(quint32 minuteStrokeColor)
 {
-    watchDial->configure(configuration);
+    QColor color(minuteStrokeColor);
+    Configuration configuration = watchDial->getConfiguration();
+    configuration.setMinuteStrokeColor(color);
+    watchDial->setConfiguration(configuration);
+    showTime();
 }
 
 void Watch::showTime()
 {
     watchDial->showTimeOfDay(QTime::currentTime());
+    timer->start(calculateNextTimerTimeout());
 }

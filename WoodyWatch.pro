@@ -1,6 +1,7 @@
 QT += gui testlib
 QT += webchannel
 QT += websockets
+QT += core
 
 CONFIG += c++11 console
 CONFIG -= app_bundle
@@ -32,7 +33,8 @@ HEADERS += \
     configuration.h \
     Communication/websocketclientwrapper.h \
     Communication/websockettransport.h \
-    Communication/webchannel.h
+    Communication/webchannel.h \
+    Communication/webinterface.h
 
 SOURCES += \
     main.cpp \
@@ -49,7 +51,8 @@ SOURCES += \
     configuration.cpp \
     Communication/websocketclientwrapper.cpp \
     Communication/websockettransport.cpp \
-    Communication/webchannel.cpp
+    Communication/webchannel.cpp \
+    Communication/webinterface.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

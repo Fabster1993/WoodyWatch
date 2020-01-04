@@ -8,11 +8,9 @@ class TestWatchDial: public QObject
     Q_OBJECT
 
 private slots:
-    void initTestCase();
     void testShowTimeOfDay_data();
     void testShowTimeOfDay();
     void testSetTwoTimesOfDayInSuccession();
-    void cleanupTestCase();
 };
 
 #endif // TESTWATCHDIAL_H

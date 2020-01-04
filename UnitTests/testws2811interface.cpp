@@ -4,11 +4,6 @@
 #include "UnitTests/Helper/csvreader.h"
 #include <QDir>
 
-void TestWs2811Interface::initTestCase()
-{
-
-}
-
 void TestWs2811Interface::testRenderSinglePixel_data()
 {
     QTest::addColumn<QString>("testDataFile");
@@ -52,9 +47,4 @@ void TestWs2811Interface::testLightsOffAfterRenderingEveryPixelToRed()
 
     Ws2811Sim* interfaceSim = dynamic_cast<Ws2811Sim*>(ledInterface);
     QCOMPARE(interfaceSim->getLedString(), csvReader.getContent());
-}
-
-void TestWs2811Interface::cleanupTestCase()
-{
-
 }

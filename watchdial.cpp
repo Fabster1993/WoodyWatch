@@ -2,14 +2,16 @@
 #include <ws2811interface.h>
 #include <QTime>
 #include <QColor>
+#include <QCoreApplication>
 
-WatchDial::WatchDial(const quint16 pixelPerMinuteStroke, const quint16 pixelPerHourStroke, Ws2811Interface* ledInterface)
+const quint16 pixelPerMinuteStroke = 1;
+const quint16 pixelPerHourStroke = 4;
+
+WatchDial::WatchDial(Ws2811Interface* ledInterface)
     : QObject(nullptr)
-    , pixelPerMinuteStroke(pixelPerMinuteStroke)
-    , pixelPerHourStroke(pixelPerHourStroke)
     , ledInterface(ledInterface)
 {
-
+    configuration = Configuration::load(QCoreApplication::applicationDirPath());
 }
 
 void WatchDial::showTimeOfDay(const QTime& timeOfDay)
@@ -20,49 +22,55 @@ void WatchDial::showTimeOfDay(const QTime& timeOfDay)
     ledInterface->renderPixels();
 }
 
-quint16 WatchDial::getPixelQuantity(const quint16 pixelPerMinuteStroke, const quint16 pixelPerHourStroke)
+quint16 WatchDial::getPixelQuantity()
 {
     return 12 * pixelPerHourStroke + 48 * pixelPerMinuteStroke;
 }
 
-void WatchDial::configure(const Configuration configuration)
+Configuration WatchDial::getConfiguration() const
 {
-    this->configuration = configuration;
+    return configuration;
 }
 
-void WatchDial::setHourPixel(const quint16 hours)
+void WatchDial::setConfiguration(Configuration configuration)
 {
-    quint16 startPixel = getHourStartPixel(hours);
+    this->configuration = configuration;
+    configuration.persist(QCoreApplication::applicationDirPath());
+}
+
+void WatchDial::setHourPixel(const quint16 hour)
+{
+    quint16 startPixel = getHourStartPixel(hour);
     quint16 endPixel = startPixel + pixelPerHourStroke - 1;
     setPixelRange(startPixel, endPixel, configuration.getHourStrokeColor());
 }
 
-void WatchDial::setMinutePixel(const quint16 minutes)
+void WatchDial::setMinutePixel(const quint16 minute)
 {
-    quint16 startPixel = getMinuteStartPixel(minutes);
+    quint16 startPixel = getMinuteStartPixel(minute);
     quint16 endPixel = startPixel + pixelPerMinuteStroke - 1;
     setPixelRange(startPixel, endPixel, configuration.getMinuteStrokeColor());
 }
 
-quint16 WatchDial::from24hFormatToAmPm(quint16 hours)
+quint16 WatchDial::from24hFormatToAmPm(quint16 hour)
 {
-    if(hours >= 12)
+    if(hour >= 12)
     {
-        return hours - 12;
+        return hour - 12;
     }
-    return hours;
+    return hour;
 }
 
-quint16 WatchDial::getHourStartPixel(const quint16 hours)
+quint16 WatchDial::getHourStartPixel(const quint16 hour)
 {
-    quint16 hoursInAmPmFormat = from24hFormatToAmPm(hours);
+    quint16 hoursInAmPmFormat = from24hFormatToAmPm(hour);
     return hoursInAmPmFormat * (pixelPerHourStroke + 4 * pixelPerMinuteStroke);
 }
 
-quint16 WatchDial::getMinuteStartPixel(const quint16 minutes)
+quint16 WatchDial::getMinuteStartPixel(const quint16 minute)
 {
-    quint16 hourStrokesBetweenZeroAndCurrentMinuteStroke = (minutes + 4) / 5;
-    return hourStrokesBetweenZeroAndCurrentMinuteStroke * pixelPerHourStroke + (minutes - hourStrokesBetweenZeroAndCurrentMinuteStroke) * pixelPerMinuteStroke;
+    quint16 hourStrokesBetweenZeroAndCurrentMinuteStroke = (minute + 4) / 5;
+    return hourStrokesBetweenZeroAndCurrentMinuteStroke * pixelPerHourStroke + (minute - hourStrokesBetweenZeroAndCurrentMinuteStroke) * pixelPerMinuteStroke;
 }
 
 void WatchDial::setPixelRange(const quint16 startPixel, const quint16 endPixel, const QColor& color)

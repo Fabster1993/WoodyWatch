@@ -10,25 +10,20 @@ class WatchDial : public QObject
 {
     Q_OBJECT
 public:
-    explicit WatchDial(const quint16 pixelPerMinuteStroke, const quint16 pixelPerHourStroke, Ws2811Interface* ledInterface);
+    explicit WatchDial(Ws2811Interface* ledInterface);
     void showTimeOfDay(const QTime& timeOfDay);
-    static quint16 getPixelQuantity(const quint16 pixelPerMinuteStroke, const quint16 pixelPerHourStroke);
-    void configure(const Configuration configuration);
-
-signals:
-
-public slots:
+    static quint16 getPixelQuantity();
+    Configuration getConfiguration() const;
+    void setConfiguration(Configuration configuration);
 
 private:
-    void setHourPixel(const quint16 hours);
-    void setMinutePixel(const quint16 minutes);
+    void setHourPixel(const quint16 hour);
+    void setMinutePixel(const quint16 minute);
     static quint16 from24hFormatToAmPm(quint16 hours);
-    quint16 getHourStartPixel(const quint16 hours);
-    quint16 getMinuteStartPixel(const quint16 minutes);
+    quint16 getHourStartPixel(const quint16 hour);
+    quint16 getMinuteStartPixel(const quint16 minute);
     void setPixelRange(const quint16 startPixel, const quint16 endPixel, const QColor& color);
 
-    quint16 pixelPerMinuteStroke;
-    quint16 pixelPerHourStroke;
     Ws2811Interface* ledInterface;
     Configuration configuration;
 };

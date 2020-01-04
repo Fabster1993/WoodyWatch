@@ -22,7 +22,8 @@ SOURCES += \
     UnitTests/testwatchdial.cpp \
     UnitTests/main.cpp \
     UnitTests/testws2811interface.cpp \
-    configuration.cpp
+    configuration.cpp \
+    UnitTests/testconfiguration.cpp
 
 HEADERS += \
     UnitTests/Helper/csvreader.h \
@@ -31,7 +32,8 @@ HEADERS += \
     watchdial.h \
     UnitTests/testwatchdial.h \
     UnitTests/testws2811interface.h \
-    configuration.h
+    configuration.h \
+    UnitTests/testconfiguration.h
 
 testdata.path = $$OUT_PWD/UnitTests/TestData/
 testdata.files = UnitTests/TestData/*

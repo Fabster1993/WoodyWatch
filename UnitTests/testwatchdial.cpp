@@ -4,14 +4,6 @@
 #include "UnitTests/Helper/csvreader.h"
 #include <QDir>
 
-const quint16 pixelPerMinuteStroke = 1;
-const quint16 pixelPerHourStroke = 4;
-
-void TestWatchDial::initTestCase()
-{
-
-}
-
 void TestWatchDial::testShowTimeOfDay_data()
 {
     QTest::addColumn<QString>("testDataFile");
@@ -30,8 +22,8 @@ void TestWatchDial::testShowTimeOfDay()
     QFETCH(QString, testDataFile);
     QFETCH(QTime, time);
     CsvReader csvReader = CsvReader(testDataFile);
-    Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity(pixelPerMinuteStroke, pixelPerHourStroke));
-    WatchDial watchDial(pixelPerMinuteStroke, pixelPerHourStroke, interface);
+    Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
+    WatchDial watchDial(interface);
 
     watchDial.showTimeOfDay(time);
 
@@ -44,16 +36,11 @@ void TestWatchDial::testSetTwoTimesOfDayInSuccession()
     QTime secondTimeOfDay(12,59);
     QString testDataFile(QDir::currentPath() + "/UnitTests/TestData/12h59.csv");
     CsvReader csvReader = CsvReader(testDataFile);
-    Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity(pixelPerMinuteStroke, pixelPerHourStroke));
-    WatchDial watchDial(pixelPerMinuteStroke, pixelPerHourStroke, interface);
+    Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
+    WatchDial watchDial(interface);
 
     watchDial.showTimeOfDay(firstTimeOfDay);
     watchDial.showTimeOfDay(secondTimeOfDay);
 
     QCOMPARE(interface->getLedString(), csvReader.getContent());
-}
-
-void TestWatchDial::cleanupTestCase()
-{
-
 }
