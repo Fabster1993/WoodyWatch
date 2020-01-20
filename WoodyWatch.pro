@@ -17,17 +17,10 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
 HEADERS += \
     ws2811interface.h \
     watchdial.h \
-    WS2811/clk.h \
-    WS2811/dma.h \
-    WS2811/gpio.h \
-    WS2811/mailbox.h \
-    WS2811/pcm.h \
-    WS2811/pwm.h \
-    WS2811/rpihw.h \
-    WS2811/ws2811.h \
     ws2811impl.h \
     watch.h \
     configuration.h \
@@ -43,12 +36,6 @@ SOURCES += \
     main.cpp \
     ws2811interface.cpp \
     watchdial.cpp \
-    WS2811/dma.c \
-    WS2811/mailbox.c \
-    WS2811/pcm.c \
-    WS2811/pwm.c \
-    WS2811/rpihw.c \
-    WS2811/ws2811.c \
     ws2811impl.cpp \
     watch.cpp \
     configuration.cpp \
@@ -69,3 +56,10 @@ else: unix:!android: target.path = /home/pi/app
 webclient.path = /var/www/html
 webclient.files = WebClient/*
 INSTALLS += webclient
+
+unix:!macx: LIBS += -L$$PWD/Dependencies/WS2811/bin/ -lWS2811
+
+INCLUDEPATH += $$PWD/Dependencies/WS2811/Headers
+DEPENDPATH += $$PWD/Dependencies/WS2811/Headers
+
+unix:!macx: PRE_TARGETDEPS += $$PWD/Dependencies/WS2811/bin/libWS2811.a

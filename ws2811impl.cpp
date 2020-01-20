@@ -1,5 +1,5 @@
 #include "ws2811impl.h"
-#include "WS2811/ws2811.h"
+#include "Dependencies/WS2811/Headers/ws2811.h"
 #include <QtDebug>
 #include <QColor>
 
