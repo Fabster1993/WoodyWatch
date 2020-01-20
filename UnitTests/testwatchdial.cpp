@@ -4,6 +4,9 @@
 #include "UnitTests/Helper/csvreader.h"
 #include <QDir>
 
+const QColor blue = QColor(0, 0, 255);
+const QColor red = QColor(255, 0, 0);
+
 void TestWatchDial::testShowTimeOfDay_data()
 {
     QTest::addColumn<QString>("testDataFile");
@@ -25,7 +28,7 @@ void TestWatchDial::testShowTimeOfDay()
     Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
     WatchDial watchDial(interface);
 
-    watchDial.showTimeOfDay(time);
+    watchDial.showTimeOfDay(time, red, blue);
 
     QCOMPARE(interface->getLedString(), csvReader.getContent());
 }
@@ -39,8 +42,8 @@ void TestWatchDial::testSetTwoTimesOfDayInSuccession()
     Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
     WatchDial watchDial(interface);
 
-    watchDial.showTimeOfDay(firstTimeOfDay);
-    watchDial.showTimeOfDay(secondTimeOfDay);
+    watchDial.showTimeOfDay(firstTimeOfDay, red, blue);
+    watchDial.showTimeOfDay(secondTimeOfDay, red, blue);
 
     QCOMPARE(interface->getLedString(), csvReader.getContent());
 }

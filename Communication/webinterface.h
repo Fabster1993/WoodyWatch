@@ -19,6 +19,7 @@ signals:
 public slots:
     void setHourStrokeColor(quint32 color);
     void setMinuteStrokeColor(quint32 color);
+    void showChimes();
 private:
     QWebSocketServer* server;
     WebSocketClientWrapper* clientWrapper;

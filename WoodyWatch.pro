@@ -34,7 +34,10 @@ HEADERS += \
     Communication/websocketclientwrapper.h \
     Communication/websockettransport.h \
     Communication/webchannel.h \
-    Communication/webinterface.h
+    Communication/webinterface.h \
+    Animations/animation.h \
+    Animations/blinkanimation.h \
+    Animations/animationfactory.h
 
 SOURCES += \
     main.cpp \
@@ -52,7 +55,10 @@ SOURCES += \
     Communication/websocketclientwrapper.cpp \
     Communication/websockettransport.cpp \
     Communication/webchannel.cpp \
-    Communication/webinterface.cpp
+    Communication/webinterface.cpp \
+    Animations/animation.cpp \
+    Animations/blinkanimation.cpp \
+    Animations/animationfactory.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

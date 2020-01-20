@@ -3,8 +3,9 @@
 #include <QTimer>
 #include "watchdial.h"
 #include "ws2811impl.h"
-
-#include <QDebug>
+#include <QCoreApplication>
+#include "Animations/animationfactory.h"
+#include "Animations/animation.h"
 
 Watch::Watch()
     : QObject(nullptr),
@@ -14,13 +15,14 @@ Watch::Watch()
 {
     timer = new QTimer;
     timer->setSingleShot(true);
+    timer->setTimerType(Qt::PreciseTimer);
     connect(timer, &QTimer::timeout, this, &Watch::showTime);
 
     ledInterface = new Ws2811Impl(WatchDial::getPixelQuantity());
     this->watchDial = new WatchDial(ledInterface);
 }
 
-qint32 Watch::calculateNextTimerTimeout()
+qint32 Watch::calculateTimeUntilNextMinuteChange()
 {
     const QTime currentTime = QTime::currentTime();
     return (60 * 1000) - (currentTime.second() * 1000) - currentTime.msec();
@@ -43,29 +45,38 @@ Watch::~Watch()
 
 void Watch::initialize()
 {
+    configuration = Configuration::load(QCoreApplication::applicationDirPath());
     showTime();
 }
 
 void Watch::setHourStrokeColor(quint32 hourStrokeColor)
 {
     QColor color(hourStrokeColor);
-    Configuration configuration = watchDial->getConfiguration();
     configuration.setHourStrokeColor(color);
-    watchDial->setConfiguration(configuration);
     showTime();
+    configuration.persist(QCoreApplication::applicationDirPath());
 }
 
 void Watch::setMinuteStrokeColor(quint32 minuteStrokeColor)
 {
     QColor color(minuteStrokeColor);
-    Configuration configuration = watchDial->getConfiguration();
     configuration.setMinuteStrokeColor(color);
-    watchDial->setConfiguration(configuration);
     showTime();
+    configuration.persist(QCoreApplication::applicationDirPath());
+}
+
+void Watch::showAnimation()
+{
+    AnimationFactory::create("unused", *watchDial).play();
 }
 
 void Watch::showTime()
 {
-    watchDial->showTimeOfDay(QTime::currentTime());
-    timer->start(calculateNextTimerTimeout());
+    QTime currentTime = QTime::currentTime();
+    if(currentTime.minute() == 0)
+    {
+        // showAnimation();
+    }
+    watchDial->showTimeOfDay(currentTime, configuration.getHourStrokeColor(), configuration.getMinuteStrokeColor());
+    timer->start(calculateTimeUntilNextMinuteChange());
 }

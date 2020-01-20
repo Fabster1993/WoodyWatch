@@ -1,0 +1,64 @@
+.radio-button-unchecked 
+{
+    background-color: lightgrey;
+}
+
+.radio-button-checked 
+{
+    background-color: lightskyblue;
+}
+
+.custom-button
+{
+    background-color: darkgray; /* Green */
+}
+
+.custom-button, .radio-button-unchecked, .radio-button-checked
+{
+    color: white;
+    width: 100px;
+    border: none;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    outline: none;
+}
+
+.red-slider, .green-slider, .blue-slider
+{
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: lightgrey; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+.red-slider::-webkit-slider-thumb, .green-slider::-webkit-slider-thumb, .blue-slider::-webkit-slider-thumb  
+{
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 25px; /* Slider handle height */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.red-slider::-webkit-slider-thumb 
+{
+    background: red; 
+}
+
+.green-slider::-webkit-slider-thumb 
+{
+    background: green; 
+}
+
+.blue-slider::-webkit-slider-thumb 
+{
+    background: blue; 
+}

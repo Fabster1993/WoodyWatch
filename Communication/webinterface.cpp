@@ -54,3 +54,8 @@ void WebInterface::setMinuteStrokeColor(quint32 color)
 {
     Watch::getInstance().setMinuteStrokeColor(color);
 }
+
+void WebInterface::showChimes()
+{
+    Watch::getInstance().showAnimation();
+}

@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Uhr konfigurieren</title>
-  </head>
-  <body>
-    <div>
-        <label>Rot</label>
-        <input id="rSlider" type="range" step="1" value="0" min="0" max="255">
-        <textarea id="rText"cols="3" rows="1" disabled="1"></textarea> 
-    </div>
-    <div>
-        <label>Grün</label>
-        <input id="gSlider" type="range" step="1" value="0" min="0" max="255">
-        <textarea id="gText"cols="3" rows="1" disabled="1"></textarea> 
-    </div> 
-    <div>
-        <label>Blau</label>
-        <input id="bSlider" type="range" step="1" value="0" min="0" max="255">
-        <textarea id="bText"cols="3" rows="1" disabled="1"></textarea> 
-    </div>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="style/main.css">
+  <title>Uhr konfigurieren</title>
+</head>
+
+<body>
+  <div style="text-align:center;">
     <svg height="100" width="100">
-      <circle id="colorPreview" cx="50" cy="50" r="40"/>
+      <circle id="colorPreview" cx="50" cy="50" r="40" />
     </svg>
-    <div>
-      <input type="radio" id="hourColor" name="strokeColor" value="hourColor"
-             checked>
-      <label for="hourColor">Farbe Stunden LED</label>
-    </div>    
-    <div>
-      <input type="radio" id="minuteColor" name="strokeColor" value="minuteColor">
-      <label for="minuteColor">Farbe Minuten LED</label>
-    </div>    
-    <button id="configureButton">Ok</button>
-  </body>
-  <script src="scripts/qwebchannel.js"></script>
-  <script src="scripts/colorselection.js"></script>
-  <script src="scripts/script.js"></script>
+  </div>
+  <div>
+    <input id="redSlider" class="red-slider" type="range" step="1" value="0" min="0" max="255">
+  </div>
+  <div>
+    <input id="greenSlider" class="green-slider" type="range" step="1" value="0" min="0" max="255">
+  </div>
+  <div>
+    <input id="blueSlider" class="blue-slider" type="range" step="1" value="0" min="0" max="255">
+  </div>
+  <div style="margin-top: 50px;">
+    <button class="radio-button-checked" id="hourColorSelection">h
+    <button class="radio-button-unchecked" id="minuteColorSelection">min
+    <button id="configureButton" class="custom-button" style="float: right;">Set
+  </div>
+  <div>
+  </div>
+</body>
+<script src="scripts/qwebchannel.js"></script>
+<script src="scripts/colorselection.js"></script>
+<script src="scripts/main.js"></script>
+
 </html>

@@ -16,5 +16,4 @@ function initializeWebChannel () {
             window.watch = channel.objects.watch;
         });
     }
-} 
-
+}

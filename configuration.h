@@ -8,7 +8,6 @@ class QXmlStreamReader;
 class Configuration
 {
 public:
-    Configuration();
     QColor getHourStrokeColor() const;
     QColor getMinuteStrokeColor() const;
     void setHourStrokeColor(const QColor hourStrokeColor);

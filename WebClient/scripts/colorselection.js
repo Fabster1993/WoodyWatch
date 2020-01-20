@@ -1,48 +1,58 @@
-var rSlider = document.getElementById("rSlider");
-var gSlider = document.getElementById("gSlider");
-var bSlider = document.getElementById("bSlider");
+var redSlider = document.getElementById("redSlider");
+var greenSlider = document.getElementById("greenSlider");
+var blueSlider = document.getElementById("blueSlider");
+var hourColorSelection = document.getElementById("hourColorSelection");
+var minuteColorSelection = document.getElementById("minuteColorSelection");
+var hourSelectionChecked = true;
 
-connectARgbSliderWithTextEdit(rSlider, "rText");
-connectARgbSliderWithTextEdit(gSlider, "gText");
-connectARgbSliderWithTextEdit(bSlider, "bText");
+connectARgbSliderWithTextEdit(redSlider);
+connectARgbSliderWithTextEdit(greenSlider);
+connectARgbSliderWithTextEdit(blueSlider);
 
 configureButton = document.getElementById("configureButton");
-configureButton.onclick = function (){
-    color = parseInt(rSlider.value) * 65536;
-    color = color + parseInt(gSlider.value) * 256; 
-    color = color + parseInt(bSlider.value);
-    var hourStrokeColor = document.getElementById("hourColor").checked;
-    if(hourStrokeColor)
+configureButton.onclick = function ()
+{
+    color = parseInt(redSlider.value) * 65536;
+    color = color + parseInt(greenSlider.value) * 256; 
+    color = color + parseInt(blueSlider.value);
+
+    if(hourSelectionChecked)
     {
+        console.log("Set hour color code: " + color);
         watch.setHourStrokeColor(color);
     }
     else
     {
+        console.log("Set minutes color code: " + color);
         watch.setMinuteStrokeColor(color);
     }
 }
 
-function connectARgbSliderWithTextEdit(slider, textID) {
-    slider.oninput = function(){
-        var text = document.getElementById(textID);
-        text.innerHTML = slider.value;
+function connectARgbSliderWithTextEdit(slider) 
+{
+    slider.oninput = function()
+    {
         setColorPreview();
     };
 }
 
-function setColorPreview() {
-    var rSlider = document.getElementById("rSlider");
-    var gSlider = document.getElementById("gSlider");
-    var bSlider = document.getElementById("bSlider");
+function setColorPreview()
+{
     var colorPreview = document.getElementById("colorPreview");
-    colorPreview.setAttribute("fill", "#" + rgbToHex(rSlider.value) + rgbToHex(gSlider.value) + rgbToHex(bSlider.value));
-
+    colorPreview.style.fill = 'rgb(' + [redSlider.value, greenSlider.value, blueSlider.value].join(',') + ')';
 }
 
-var rgbToHex = function (rgb) { 
-    var hex = Number(rgb).toString(16);
-    if (hex.length < 2) {
-         hex = "0" + hex;
-    }
-    return hex;
-  };
+hourColorSelection.onclick = function()
+{
+    hourColorSelection.className = "radio-button-checked";
+    minuteColorSelection.className = "radio-button-unchecked";
+    hourSelectionChecked = true;
+}
+
+minuteColorSelection.onclick = function()
+{
+
+    hourColorSelection.className = "radio-button-unchecked";
+    minuteColorSelection.className = "radio-button-checked";
+    hourSelectionChecked = false;
+}

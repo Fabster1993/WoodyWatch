@@ -3,10 +3,6 @@
 #include <QFile>
 #include <QDir>
 
-#include <QDebug>
-
-const QColor minuteStrokeColorDefault = QColor(0, 0, 255); // blue
-const QColor hourStrokeColorDefault = QColor(255, 0, 0); // red
 const QString rootElement = "configuration";
 const QString hourColorElement = "hourColor";
 const QString minuteColorElement = "minuteColor";
@@ -14,13 +10,6 @@ const QString redElement = "red";
 const QString greenElement = "green";
 const QString blueElement = "blue";
 const QString configurationFileName = "configuration.xml";
-
-Configuration::Configuration() :
-      hourStrokeColor(hourStrokeColorDefault),
-      minuteStrokeColor(minuteStrokeColorDefault)
-{
-
-}
 
 QColor Configuration::getHourStrokeColor() const
 {
