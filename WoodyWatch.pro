@@ -29,8 +29,10 @@ HEADERS += \
     Communication/webchannel.h \
     Communication/webinterface.h \
     Animations/animation.h \
-    Animations/blinkanimation.h \
-    Animations/animationfactory.h
+    Animations/animationfactory.h \
+    Animations/hourblinkanimation.h \
+    Animations/increasingcircleanimation.h \
+    Animations/runningdotanimation.h
 
 SOURCES += \
     main.cpp \
@@ -44,8 +46,10 @@ SOURCES += \
     Communication/webchannel.cpp \
     Communication/webinterface.cpp \
     Animations/animation.cpp \
-    Animations/blinkanimation.cpp \
-    Animations/animationfactory.cpp
+    Animations/animationfactory.cpp \
+    Animations/hourblinkanimation.cpp \
+    Animations/increasingcircleanimation.cpp \
+    Animations/runningdotanimation.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -57,6 +61,7 @@ webclient.path = /var/www/html
 webclient.files = WebClient/*
 INSTALLS += webclient
 
+# add WS2811 lib as static dependency
 unix:!macx: LIBS += -L$$PWD/Dependencies/WS2811/bin/ -lWS2811
 
 INCLUDEPATH += $$PWD/Dependencies/WS2811/Headers

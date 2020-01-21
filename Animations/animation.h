@@ -1,5 +1,5 @@
-#ifndef CHIMES_H
-#define CHIMES_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
 #include <QObject>
 
@@ -16,6 +16,12 @@ public:
 protected:
     QTimer* timer;
     WatchDial& watchDial;
+    quint16 counter;
+
+    void lightsOff();
+    void finishAnimation();
+signals:
+    void animationFinished();
 };
 
-#endif // CHIMES_H
+#endif // ANIMATION_H

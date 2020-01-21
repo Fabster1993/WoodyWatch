@@ -4,6 +4,7 @@
 #include "Communication/webchannel.h"
 #include "Communication/websockettransport.h"
 #include "watch.h"
+#include "Animations/animationfactory.h"
 
 WebInterface::WebInterface(QObject *parent) :
     QObject(parent),
@@ -46,7 +47,6 @@ WebInterface::~WebInterface()
 
 void WebInterface::setHourStrokeColor(quint32 color)
 {
-    qDebug() << color;
     Watch::getInstance().setHourStrokeColor(color);
 }
 
@@ -55,7 +55,32 @@ void WebInterface::setMinuteStrokeColor(quint32 color)
     Watch::getInstance().setMinuteStrokeColor(color);
 }
 
-void WebInterface::showChimes()
+void WebInterface::showAnimation(const QString animationName)
 {
-    Watch::getInstance().showAnimation();
+    Watch::getInstance().showAnimation(animationName);
+}
+
+void WebInterface::setAnimation(const QString animationName)
+{
+    Watch::getInstance().setAnimation(animationName);
+}
+
+quint32 WebInterface::getHourStrokeColor()
+{
+    return Watch::getInstance().getHourStrokeColor().rgb();
+}
+
+quint32 WebInterface::getMinuteStrokeColor()
+{
+    return Watch::getInstance().getMinuteStrokeColor().rgb();
+}
+
+QString WebInterface::getAnimationName()
+{
+    return Watch::getInstance().getAnimationName();
+}
+
+QString WebInterface::getAllAvailableAnimationNames()
+{
+    return AnimationFactory::getAllAvailableAnimationNames();
 }

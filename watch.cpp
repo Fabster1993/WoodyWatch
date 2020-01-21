@@ -16,7 +16,7 @@ Watch::Watch()
     timer = new QTimer;
     timer->setSingleShot(true);
     timer->setTimerType(Qt::PreciseTimer);
-    connect(timer, &QTimer::timeout, this, &Watch::showTime);
+    connect(timer, &QTimer::timeout, this, &Watch::onMinutePassed);
 
     ledInterface = new Ws2811Impl(WatchDial::getPixelQuantity());
     this->watchDial = new WatchDial(ledInterface);
@@ -46,14 +46,14 @@ Watch::~Watch()
 void Watch::initialize()
 {
     configuration = Configuration::load(QCoreApplication::applicationDirPath());
-    showTime();
+    startAnimation();
 }
 
 void Watch::setHourStrokeColor(quint32 hourStrokeColor)
 {
     QColor color(hourStrokeColor);
     configuration.setHourStrokeColor(color);
-    showTime();
+    showTimeOfDay();
     configuration.persist(QCoreApplication::applicationDirPath());
 }
 
@@ -61,22 +61,56 @@ void Watch::setMinuteStrokeColor(quint32 minuteStrokeColor)
 {
     QColor color(minuteStrokeColor);
     configuration.setMinuteStrokeColor(color);
-    showTime();
+    showTimeOfDay();
     configuration.persist(QCoreApplication::applicationDirPath());
 }
 
-void Watch::showAnimation()
+void Watch::setAnimation(const QString animationName)
 {
-    AnimationFactory::create("unused", *watchDial).play();
+    configuration.setAnimation(animationName);
+    configuration.persist(QCoreApplication::applicationDirPath());
 }
 
-void Watch::showTime()
+QColor Watch::getHourStrokeColor() const
 {
-    QTime currentTime = QTime::currentTime();
-    if(currentTime.minute() == 0)
+    return configuration.getHourStrokeColor();
+}
+
+QColor Watch::getMinuteStrokeColor() const
+{
+    return configuration.getMinuteStrokeColor();
+}
+
+QString Watch::getAnimationName()
+{
+    return configuration.getAnimation();
+}
+
+void Watch::startAnimation()
+{
+    AnimationFactory::create(configuration.getAnimation(), *watchDial).play();
+
+}
+
+void Watch::showAnimation(const QString animation)
+{
+    AnimationFactory::create(animation, *watchDial).play();
+}
+
+void Watch::onMinutePassed()
+{
+    if(QTime::currentTime().minute() == 0)
     {
-        // showAnimation();
+        startAnimation();
     }
-    watchDial->showTimeOfDay(currentTime, configuration.getHourStrokeColor(), configuration.getMinuteStrokeColor());
+    else
+    {
+        showTimeOfDay();
+    }
+}
+
+void Watch::showTimeOfDay()
+{
+    watchDial->showTime(QTime::currentTime(), configuration.getHourStrokeColor(), configuration.getMinuteStrokeColor());
     timer->start(calculateTimeUntilNextMinuteChange());
 }

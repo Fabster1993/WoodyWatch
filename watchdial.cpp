@@ -13,7 +13,7 @@ WatchDial::WatchDial(Ws2811Interface* ledInterface)
 
 }
 
-void WatchDial::showTimeOfDay(const QTime& timeOfDay, const QColor& hourStrokeColor, const QColor& minuteStrokeColor)
+void WatchDial::showTime(const QTime& timeOfDay, const QColor& hourStrokeColor, const QColor& minuteStrokeColor)
 {
     resetPixels();
     setHourPixel(static_cast<quint16>(timeOfDay.hour()), hourStrokeColor);
@@ -24,6 +24,11 @@ void WatchDial::showTimeOfDay(const QTime& timeOfDay, const QColor& hourStrokeCo
 quint16 WatchDial::getPixelQuantity()
 {
     return 12 * pixelPerHourStroke + 48 * pixelPerMinuteStroke;
+}
+
+quint16 WatchDial::getPixelPerHourStroke()
+{
+    return pixelPerHourStroke;
 }
 
 void WatchDial::setHourPixel(const quint16 hour, const QColor& color)

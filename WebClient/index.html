@@ -4,36 +4,43 @@
 
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="style/main.css">
-  <title>Uhr konfigurieren</title>
+  <title>Configuration</title>
 </head>
-
 <body>
-  <div style="text-align:center;">
-    <svg height="100" width="100">
-      <circle id="colorPreview" cx="50" cy="50" r="40" />
-    </svg>
+  <div class="section">Color
+    <div style="text-align:center; height: 100px">
+      <svg height="100%" width="100%">
+        <rect id="colorPreview" width="100%" height="100%">
+      </svg>
+    </div>
+    <div style="margin-top: 10px;">
+      <input id="redSlider" class="red-slider" type="range" step="1" value="0" min="0" max="255">
+      <input id="greenSlider" class="green-slider" type="range" step="1" value="0" min="0" max="255">
+      <input id="blueSlider" class="blue-slider" type="range" step="1" value="0" min="0" max="255">
+      <div style="margin-top: 50px;">
+        <button class="radio-button-checked" id="hourColorSelection">h
+        <button class="radio-button-unchecked" id="minuteColorSelection">min
+        <button id="setColorButton" class="custom-button" style="float: right;">Set</button>
+      </div>
+    </div>
   </div>
-  <div>
-    <input id="redSlider" class="red-slider" type="range" step="1" value="0" min="0" max="255">
-  </div>
-  <div>
-    <input id="greenSlider" class="green-slider" type="range" step="1" value="0" min="0" max="255">
-  </div>
-  <div>
-    <input id="blueSlider" class="blue-slider" type="range" step="1" value="0" min="0" max="255">
-  </div>
-  <div style="margin-top: 50px;">
-    <button class="radio-button-checked" id="hourColorSelection">h
-    <button class="radio-button-unchecked" id="minuteColorSelection">min
-    <button id="configureButton" class="custom-button" style="float: right;">Set
-  </div>
-  <div>
+  <div class="section" style="margin-top: 10px;">Animation
+    <div>
+      <div class="dropdown">
+        <button id="animationsMenuButton" style="width: 150px;" class="drop-down-button"></button>
+        <div id="animations" class="dropdown-content">
+        </div>
+        <button id="setAnimation" class="custom-button" style="float: right;">Set</button>
+        <button id="showAnimation" class="custom-button" style="float: right; margin-right: 10px;">Show</button>
+      </div>
+    </div>
   </div>
 </body>
 <script src="scripts/qwebchannel.js"></script>
 <script src="scripts/colorselection.js"></script>
+<script src="scripts/animation.js"></script>
 <script src="scripts/main.js"></script>
 
 </html>

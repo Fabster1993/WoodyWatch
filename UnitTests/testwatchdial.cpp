@@ -7,7 +7,7 @@
 const QColor blue = QColor(0, 0, 255);
 const QColor red = QColor(255, 0, 0);
 
-void TestWatchDial::testShowTimeOfDay_data()
+void TestWatchDial::testShowTime_data()
 {
     QTest::addColumn<QString>("testDataFile");
     QTest::addColumn<QTime>("time");
@@ -20,7 +20,7 @@ void TestWatchDial::testShowTimeOfDay_data()
     QTest::newRow("15h15") << QString(QDir::currentPath() + "/UnitTests/TestData/03h15.csv") << QTime(15,15);
 }
 
-void TestWatchDial::testShowTimeOfDay()
+void TestWatchDial::testShowTime()
 {
     QFETCH(QString, testDataFile);
     QFETCH(QTime, time);
@@ -28,7 +28,7 @@ void TestWatchDial::testShowTimeOfDay()
     Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
     WatchDial watchDial(interface);
 
-    watchDial.showTimeOfDay(time, red, blue);
+    watchDial.showTime(time, red, blue);
 
     QCOMPARE(interface->getLedString(), csvReader.getContent());
 }
@@ -42,8 +42,8 @@ void TestWatchDial::testSetTwoTimesOfDayInSuccession()
     Ws2811Sim* interface = new Ws2811Sim(WatchDial::getPixelQuantity());
     WatchDial watchDial(interface);
 
-    watchDial.showTimeOfDay(firstTimeOfDay, red, blue);
-    watchDial.showTimeOfDay(secondTimeOfDay, red, blue);
+    watchDial.showTime(firstTimeOfDay, red, blue);
+    watchDial.showTime(secondTimeOfDay, red, blue);
 
     QCOMPARE(interface->getLedString(), csvReader.getContent());
 }

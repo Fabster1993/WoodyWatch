@@ -20,9 +20,15 @@ public:
     void initialize();
     void setHourStrokeColor(quint32 hourStrokeColor);
     void setMinuteStrokeColor(quint32 minuteStrokeColor);
-    void showAnimation();
+    void setAnimation(const QString animationName);
+    QColor getHourStrokeColor() const;
+    QColor getMinuteStrokeColor() const;
+    QString getAnimationName();
+    void startAnimation();
+    void showAnimation(const QString animation);
+    void showTimeOfDay();
 private slots:
-    void showTime();
+    void onMinutePassed();
 private:
     explicit Watch();
     static qint32 calculateTimeUntilNextMinuteChange();

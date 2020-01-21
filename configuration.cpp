@@ -9,6 +9,7 @@ const QString minuteColorElement = "minuteColor";
 const QString redElement = "red";
 const QString greenElement = "green";
 const QString blueElement = "blue";
+const QString animationElement = "animation";
 const QString configurationFileName = "configuration.xml";
 
 QColor Configuration::getHourStrokeColor() const
@@ -21,6 +22,11 @@ QColor Configuration::getMinuteStrokeColor() const
     return minuteStrokeColor;
 }
 
+QString Configuration::getAnimation() const
+{
+    return animation;
+}
+
 void Configuration::setHourStrokeColor(const QColor hourStrokeColor)
 {
     this->hourStrokeColor = hourStrokeColor;
@@ -29,6 +35,11 @@ void Configuration::setHourStrokeColor(const QColor hourStrokeColor)
 void Configuration::setMinuteStrokeColor(const QColor minuteStrokeColor)
 {
     this->minuteStrokeColor = minuteStrokeColor;
+}
+
+void Configuration::setAnimation(const QString animationName)
+{
+    animation = animationName;
 }
 
 void Configuration::persist(const QString& configurationPath)
@@ -50,6 +61,7 @@ void Configuration::persist(const QString& configurationPath)
         stream.writeTextElement(greenElement, QString::number(minuteStrokeColor.green()));
         stream.writeTextElement(blueElement, QString::number(minuteStrokeColor.blue()));
         stream.writeEndElement(); // minuteColorElement
+        stream.writeTextElement(animationElement, animation);
         stream.writeEndElement(); // rootElement
         stream.writeEndDocument();
     }
@@ -77,6 +89,11 @@ Configuration Configuration::load(const QString &configurationPath)
                     QColor minuteStrokeColor = loadColorFromStream(stream);
                     configuration.setMinuteStrokeColor(minuteStrokeColor);
                 }
+                if(stream.qualifiedName() == animationElement)
+                {
+                    QString animationName = stream.readElementText();
+                    configuration.setAnimation(animationName);
+                }
             }
         }
     }
@@ -94,7 +111,7 @@ QColor Configuration::loadColorFromStream(QXmlStreamReader& stream)
         quint32 value = stream.readElementText().toUInt();
         color |= value;
 
-        if(stream.qualifiedName() == blueElement)
+        if(stream.qualifiedName() == blueElement) // as this is the last element
             break;
     }
     return QColor(color);
