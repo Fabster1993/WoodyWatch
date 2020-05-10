@@ -2,6 +2,7 @@
 #include "Animations/hourblinkanimation.h"
 #include "Animations/increasingcircleanimation.h"
 #include "Animations/runningdotanimation.h"
+#include "Animations/pingponganimation.h"
 
 const QString formatting("%1\n");
 
@@ -23,6 +24,11 @@ Animation& AnimationFactory::create(const QString& name, WatchDial& watchDial)
         static RunningDotAnimation instance(watchDial);
         return instance;
     }
+    if(name == PingPongAnimation::getName())
+    {
+        static PingPongAnimation instance(watchDial);
+        return instance;
+    }
     return defaultInstance;
 }
 
@@ -32,5 +38,6 @@ QString AnimationFactory::getAllAvailableAnimationNames()
     animationList += formatting.arg(HourBlinkAnimation::getName());
     animationList += formatting.arg(IncreasingCircleAnimation::getName());
     animationList += formatting.arg(RunningDotAnimation::getName());
+    animationList += formatting.arg(PingPongAnimation::getName());
     return animationList;
 }

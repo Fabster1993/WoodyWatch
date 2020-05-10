@@ -32,7 +32,8 @@ HEADERS += \
     Animations/animationfactory.h \
     Animations/hourblinkanimation.h \
     Animations/increasingcircleanimation.h \
-    Animations/runningdotanimation.h
+    Animations/runningdotanimation.h \
+    Animations/pingponganimation.h
 
 SOURCES += \
     main.cpp \
@@ -49,7 +50,8 @@ SOURCES += \
     Animations/animationfactory.cpp \
     Animations/hourblinkanimation.cpp \
     Animations/increasingcircleanimation.cpp \
-    Animations/runningdotanimation.cpp
+    Animations/runningdotanimation.cpp \
+    Animations/pingponganimation.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
